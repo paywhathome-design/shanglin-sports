@@ -18,15 +18,15 @@
          ==================================================================== -->
     <header class="site-header">
       <!-- 滿版背景團體照 (調淡透明度，不影響其他按鍵清晰度) -->
-      <div class="header-bg-photo" style="background-image: url('assets/images/group_photo.jpg');"></div>
+      <div class="header-bg-photo" style="background-image: url('group_photo.jpg'), url('assets/images/group_photo.jpg');"></div>
       <div class="header-bg-overlay"></div>
 
       <div class="brand-section">
         <!-- 替換原先的 🐣💖 為上林國小校徽與師生團體照 -->
         <div class="header-brand-media">
-          <img src="assets/images/school_logo.png" alt="上林國小校徽" class="brand-school-logo" title="新北市雙溪區上林國小校徽" />
+          <img src="school_logo.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='assets/images/school_logo.png';}" alt="上林國小校徽" class="brand-school-logo" title="新北市雙溪區上林國小校徽" />
           <div class="brand-group-photo-pill" id="header-group-photo-btn" title="點擊檢視「美好上林，一起同行!」師生大合照">
-            <img src="assets/images/group_photo.jpg" alt="上林國小師生團體照" class="brand-group-photo-img" />
+            <img src="group_photo.jpg" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='assets/images/group_photo.jpg';}" alt="上林國小師生團體照" class="brand-group-photo-img" />
           </div>
         </div>
         <div class="brand-text-wrap">
@@ -36,6 +36,12 @@
       </div>
 
       <div class="header-actions">
+        <!-- 雲端試算表連線狀態膠囊 -->
+        <div class="cloud-sync-badge" id="header-cloud-badge" title="Google 試算表雲端同步狀態 (點擊可檢視或設定)">
+          <span id="cloud-badge-icon">☁️</span>
+          <span id="cloud-badge-text">本機模式</span>
+        </div>
+
         <!-- 新使用者註冊欄位按鈕 -->
         <button class="cute-btn cute-btn-primary" id="header-register-btn" title="新同學或新老師？點擊快速註冊新帳號！">
           <span>✨</span> 新使用者註冊
@@ -105,6 +111,8 @@
 
           <!-- 神寵互動立繪區 (點擊摸摸撒嬌) -->
           <div class="pet-canvas-container" id="pet-interactive-container" title="點擊摸摸我~ 會發出呼嚕聲與愛心喔！">
+            <!-- 獲得道具呈現在神寵角色畫面右上角 -->
+            <div class="pet-floating-items-tray" id="pet-floating-items-tray"></div>
             <div id="pet-display-wrapper" style="width: 100%; height: 100%;"></div>
             <div class="pet-touch-hint">點擊神寵摸摸撒嬌 💕</div>
           </div>
@@ -225,7 +233,7 @@
           <!-- 能力結構判定與浪漫飾品 -->
           <div class="marshmallow-card">
             <div class="card-title-row">
-              <h3><span>🔮</span> 能力結構與專屬飾品</h3>
+              <h3><span>🔮</span> 能力結構與裝備道具</h3>
             </div>
 
             <div class="structure-badge-box">
@@ -848,7 +856,7 @@
             </div>
           </div>
           <div style="font-size: 11px; color: var(--text-subtle); margin-top: 4px;">
-            💡 提示：儲存後系統將自動重新判定能力結構、主要能力與專屬浪漫飾品！
+            💡 提示：儲存後系統將自動重新判定能力結構、主要能力與專屬裝備道具！
           </div>
         </div>
 
@@ -872,7 +880,7 @@
         <button class="cute-btn-icon-only" id="group-photo-modal-close">✕</button>
       </div>
       <div style="border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-marshmallow); border: 3px solid var(--peach-pink); margin-bottom: 14px;">
-        <img src="assets/images/group_photo.jpg" alt="上林國小師生團體照" style="width: 100%; height: auto; display: block;" />
+        <img src="group_photo.jpg" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='assets/images/group_photo.jpg';}" alt="上林國小師生團體照" style="width: 100%; height: auto; display: block;" />
       </div>
       <p style="font-size: 18px; font-weight: 800; color: var(--sakura-pink); letter-spacing: 1px;">
         「美好上林，一起同行!」💖✨
