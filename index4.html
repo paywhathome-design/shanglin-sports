@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
+/* ===== Shanglin Pet System Stylesheet ===== */
 /* ==========================================================================
    上林神寵運動養成系統 - 浪漫粉彩與極致可愛呆萌樣式表 (style.css)
    色彩體系：
@@ -531,6 +532,174 @@ body::before {
   pointer-events: none;
   box-shadow: 0 4px 12px rgba(255, 117, 143, 0.2);
   animation: floatBounce 2s infinite ease-in-out;
+}
+
+/* 神寵展台右上角專屬寶物裝備展示列 (得到時呈現在神寵角色畫面的右上角) */
+.pet-floating-items-tray {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 15;
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 170px;
+  pointer-events: auto;
+}
+
+.pet-equipped-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 2px solid #FFCAD4;
+  box-shadow: 0 4px 12px rgba(255, 117, 143, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  animation: itemBadgePop 0.5s ease-out;
+}
+
+.pet-equipped-badge:hover {
+  transform: scale(1.22) rotate(8deg);
+  border-color: #FF758F;
+  box-shadow: 0 6px 18px rgba(255, 117, 143, 0.45);
+}
+
+.pet-equipped-badge.pop-anim {
+  animation: itemBounceClick 0.5s ease-in-out;
+}
+
+@keyframes itemBadgePop {
+  0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+  70% { transform: scale(1.25) rotate(10deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes itemBounceClick {
+  0%, 100% { transform: scale(1); }
+  40% { transform: scale(1.35) rotate(-10deg); }
+  75% { transform: scale(1.15) rotate(6deg); }
+}
+
+.item-tooltip-bubble {
+  position: absolute;
+  bottom: -28px;
+  right: 50%;
+  transform: translateX(50%) translateY(4px);
+  white-space: nowrap;
+  background: rgba(74, 62, 61, 0.92);
+  color: #FFF;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 25;
+}
+
+.pet-equipped-badge:hover .item-tooltip-bubble {
+  opacity: 1;
+  transform: translateX(50%) translateY(0);
+}
+
+/* 能力結構卡片內寶物裝備道具網格 */
+.magic-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.magic-item-slot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: #FFF;
+  border: 1.5px solid var(--card-border);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.magic-item-slot.is-unlocked {
+  border-color: #FF758F;
+  background: linear-gradient(135deg, #FFF9FA 0%, #FFF0F3 100%);
+  box-shadow: 0 4px 10px rgba(255, 117, 143, 0.15);
+}
+
+.magic-item-slot.is-unlocked:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(255, 117, 143, 0.25);
+}
+
+.magic-item-slot.is-locked {
+  opacity: 0.55;
+  background: #F8F9FA;
+  border-style: dashed;
+}
+
+.magic-item-slot.is-locked:hover {
+  opacity: 0.85;
+}
+
+.magic-item-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.magic-item-slot.is-unlocked .magic-item-icon-box {
+  background: linear-gradient(135deg, #FFE5EC 0%, #FFCAD4 100%);
+}
+
+.magic-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.magic-item-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.magic-item-status {
+  font-size: 10px;
+  color: #52B788;
+  font-weight: 600;
+}
+
+.magic-item-slot.is-locked .magic-item-status {
+  color: var(--text-subtle);
+}
+
+.magic-item-condition {
+  font-size: 10px;
+  color: var(--text-subtle);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 1px;
 }
 
 /* 摸摸愛心粒子與飄字特效 */
@@ -2430,7 +2599,7 @@ body::before {
          ==================================================================== -->
     <header class="site-header">
       <!-- 滿版背景團體照 (調淡透明度，不影響其他按鍵清晰度) -->
-      <div class="header-bg-photo" style="background-image: url('assets/images/group_photo.jpg');"></div>
+      <div class="header-bg-photo" style="background-image: url('group_photo.jpg'), url('assets/images/group_photo.jpg');"></div>
       <div class="header-bg-overlay"></div>
 
       <div class="brand-section">
@@ -2448,12 +2617,13 @@ body::before {
       </div>
 
       <div class="header-actions">
-                <!-- 雲端試算表連線狀態膠囊 -->
+        <!-- 雲端試算表連線狀態膠囊 -->
         <div class="cloud-sync-badge" id="header-cloud-badge" title="Google 試算表雲端同步狀態 (點擊可檢視或設定)">
           <span id="cloud-badge-icon">☁️</span>
           <span id="cloud-badge-text">本機模式</span>
         </div>
-<!-- 新使用者註冊欄位按鈕 -->
+
+        <!-- 新使用者註冊欄位按鈕 -->
         <button class="cute-btn cute-btn-primary" id="header-register-btn" title="新同學或新老師？點擊快速註冊新帳號！">
           <span>✨</span> 新使用者註冊
         </button>
@@ -2522,6 +2692,8 @@ body::before {
 
           <!-- 神寵互動立繪區 (點擊摸摸撒嬌) -->
           <div class="pet-canvas-container" id="pet-interactive-container" title="點擊摸摸我~ 會發出呼嚕聲與愛心喔！">
+            <!-- 獲得道具呈現在神寵角色畫面右上角 -->
+            <div class="pet-floating-items-tray" id="pet-floating-items-tray"></div>
             <div id="pet-display-wrapper" style="width: 100%; height: 100%;"></div>
             <div class="pet-touch-hint">點擊神寵摸摸撒嬌 💕</div>
           </div>
@@ -2642,7 +2814,7 @@ body::before {
           <!-- 能力結構判定與浪漫飾品 -->
           <div class="marshmallow-card">
             <div class="card-title-row">
-              <h3><span>🔮</span> 能力結構與專屬飾品</h3>
+              <h3><span>🔮</span> 能力結構與裝備道具</h3>
             </div>
 
             <div class="structure-badge-box">
@@ -3265,7 +3437,7 @@ body::before {
             </div>
           </div>
           <div style="font-size: 11px; color: var(--text-subtle); margin-top: 4px;">
-            💡 提示：儲存後系統將自動重新判定能力結構、主要能力與專屬浪漫飾品！
+            💡 提示：儲存後系統將自動重新判定能力結構、主要能力與專屬裝備道具！
           </div>
         </div>
 
@@ -3408,6 +3580,8 @@ body::before {
 
   <!-- 核心腳本載入 -->
   <script>
+/* ===== Shanglin Pet System Bundled JS ===== */
+/* ===== config.js ===== */
 /**
  * 上林神寵運動養成系統 - 核心配置與資料庫 (config.js)
  * 100% 嚴格對照官方 PDF 核心遊戲規則、神寵分支進化圖鑑與生命樹規範
@@ -3768,37 +3942,72 @@ const CONFIG = {
     }
   },
 
-  // 浪漫專屬飾品定義 (PDF 第四頁: 當第 3 能力 >= 15% 時自動佩戴)
-  ROMANTIC_ACCESSORIES: {
-    endurance: {
-      id: 'heart_aura',
-      name: '心動光環',
-      ability: 'endurance',
-      icon: '💖',
-      desc: '粉彩愛心在頭頂溫柔旋轉，散發暖洋洋的安心微光'
+  // 專屬裝備與寶物道具 (武器、能量水、勇氣、魔法棒、隱形斗篷、無敵咒語)
+  MAGIC_ITEMS: {
+    weapon: {
+      id: 'weapon',
+      name: '武器',
+      fullName: '傳奇神武',
+      icon: '⚔️',
+      color: '#F77F00',
+      badgeColor: 'linear-gradient(135deg, #F77F00 0%, #FFB703 100%)',
+      desc: '充滿爆發力與肌力象徵！衝鋒陷陣無所畏懼！',
+      unlockTip: '進行肌力或阻力爆發運動獲得 💪'
     },
-    coordination: {
-      id: 'star_note',
-      name: '星願音符',
-      ability: 'coordination',
-      icon: '🎵',
-      desc: '琉璃色高音符在身旁輕巧躍動，每走一步都響起銀鈴音律'
+    energy_water: {
+      id: 'energy_water',
+      name: '能量水',
+      fullName: '活力能量水',
+      icon: '🧪',
+      color: '#FF5C8A',
+      badgeColor: 'linear-gradient(135deg, #FF758F 0%, #FFCAD4 100%)',
+      desc: '源源不絕的生命活力！耐力與心肺持久不衰！',
+      unlockTip: '進行跑步、慢跑或持續耐力運動獲得 ❤️'
     },
-    agility: {
-      id: 'feather_ribbon',
-      name: '飛羽緞帶',
-      ability: 'agility',
-      icon: '🎀',
-      desc: '輕盈透亮的櫻粉緞帶隨風飄逸，身形更加敏捷如燕'
+    courage: {
+      id: 'courage',
+      name: '勇氣',
+      fullName: '勇氣之心',
+      icon: '🦁',
+      color: '#E63946',
+      badgeColor: 'linear-gradient(135deg, #E63946 0%, #FF9E00 100%)',
+      desc: '勇敢挑戰自我、突破極限的運動家精神！',
+      unlockTip: '每日打卡選擇個人挑戰或堅持累積獲得 🌟'
     },
-    strength: {
-      id: 'brave_cloak',
-      name: '小勇士披風',
-      ability: 'strength',
-      icon: '🦸‍♂️',
-      desc: '繡著金色小星星的可愛小斗篷，充滿了滿滿的勇氣與力量'
+    magic_wand: {
+      id: 'magic_wand',
+      name: '魔法棒',
+      fullName: '星光魔法棒',
+      icon: '🪄',
+      color: '#9D4EDD',
+      badgeColor: 'linear-gradient(135deg, #9D4EDD 0%, #C77DFF 100%)',
+      desc: '精準掌控節奏與身體，揮灑手眼協調奇蹟！',
+      unlockTip: '進行球類投籃、拋接或跳繩協調運動獲得 🎯'
+    },
+    invisibility_cloak: {
+      id: 'invisibility_cloak',
+      name: '隱形斗篷',
+      fullName: '疾風隱形斗篷',
+      icon: '🧥',
+      color: '#48CAE4',
+      badgeColor: 'linear-gradient(135deg, #48CAE4 0%, #90E0EF 100%)',
+      desc: '疾如閃電、靈動變向，在運動場上穿梭無形！',
+      unlockTip: '進行短跑衝刺、比賽或敏捷變向運動獲得 ⚡'
+    },
+    invincible_spell: {
+      id: 'invincible_spell',
+      name: '無敵咒語',
+      fullName: '無敵聖光咒語',
+      icon: '📜',
+      color: '#52B788',
+      badgeColor: 'linear-gradient(135deg, #52B788 0%, #74C69D 100%)',
+      desc: '四大運動能量均衡共鳴，神寵至高無敵聖光！',
+      unlockTip: '達成四項全能均衡、神寵進化或週目標解鎖 ✨'
     }
   },
+
+  // 浪漫專屬飾品定義 (已停用自動佩戴，保留相容性)
+  ROMANTIC_ACCESSORIES: {},
 
   // 健康促進生命樹 5 階段 (個人每週目標基準)
   TREE_STAGES: [
@@ -3889,6 +4098,8 @@ if (typeof window !== 'undefined') {
   window.CONFIG = CONFIG;
 }
 
+
+/* ===== algorithm.js ===== */
 /**
  * 上林神寵運動養成系統 - 核心演算法 (algorithm.js)
  * 100% 嚴格落實 PDF 官方遊戲規則：
@@ -4227,11 +4438,36 @@ const ShanglinAlgorithm = {
       desc = `「${list[0].name}」與「${list[1].name}」雙峰並峙，相輔相成！`;
     }
 
-    // 飾品判定：單主/雙能力型若第三能力 >= 15%，增加專屬浪漫飾品
-    let accessory = null;
-    if ((structureType === 'specialist' || structureType === 'dual') && p3rd >= 0.150000) {
-      const thirdAbilityId = list[2].id;
-      accessory = CONFIG.ROMANTIC_ACCESSORIES[thirdAbilityId] || null;
+    // 專屬裝備與寶物道具判定 (武器、能量水、勇氣、魔法棒、隱形斗篷、無敵咒語)
+    // 依據學童實際運動鍛鍊累積之能力能量動態解鎖
+    const obtainedItems = [];
+    const totalScore = end + str + agi + coo;
+
+    if (typeof CONFIG !== 'undefined' && CONFIG.MAGIC_ITEMS) {
+      // 1. 武器：肌力能量 > 0 或肌力鍛鍊達標
+      if (str > 0 || (totalScore > 0 && (str / totalScore) >= 0.12)) {
+        obtainedItems.push(CONFIG.MAGIC_ITEMS.weapon);
+      }
+      // 2. 能量水：耐力心肺 > 0 或耐力持久達標
+      if (end > 0 || (totalScore > 0 && (end / totalScore) >= 0.12)) {
+        obtainedItems.push(CONFIG.MAGIC_ITEMS.energy_water);
+      }
+      // 3. 勇氣：勇敢開始運動、有打卡或堅持累積
+      if (totalScore > 0) {
+        obtainedItems.push(CONFIG.MAGIC_ITEMS.courage);
+      }
+      // 4. 魔法棒：手眼協調、節奏控制達標
+      if (coo > 0 || (totalScore > 0 && (coo / totalScore) >= 0.12)) {
+        obtainedItems.push(CONFIG.MAGIC_ITEMS.magic_wand);
+      }
+      // 5. 隱形斗篷：敏捷極速、身手靈動達標
+      if (agi > 0 || (totalScore > 0 && (agi / totalScore) >= 0.12)) {
+        obtainedItems.push(CONFIG.MAGIC_ITEMS.invisibility_cloak);
+      }
+      // 6. 無敵咒語：四項均衡、三能共振或四項全面活化
+      if (structureType === 'balanced' || structureType === 'tri_resonance' || (end > 0 && str > 0 && agi > 0 && coo > 0)) {
+        obtainedItems.push(CONFIG.MAGIC_ITEMS.invincible_spell);
+      }
     }
 
     return {
@@ -4248,7 +4484,8 @@ const ShanglinAlgorithm = {
       structureType,
       structureName,
       desc,
-      accessory
+      accessory: null, // 停用自動配戴專屬浪漫飾品
+      obtainedItems
     };
   },
 
@@ -4440,6 +4677,8 @@ if (typeof window !== 'undefined') {
   window.ShanglinAlgorithm = ShanglinAlgorithm;
 }
 
+
+/* ===== audio.js ===== */
 /**
  * 上林神寵運動養成系統 - Web Audio API 即時音效引擎 (audio.js)
  * 無需外部音訊檔案，全純程式合成：
@@ -4888,6 +5127,37 @@ class SoundEngine {
     osc.start(now);
     osc.stop(now + 0.1);
   }
+
+  /**
+   * 6. 寶物裝備獲得與點擊音效 (Magic Item Sparkle)
+   */
+  playMagicItemSound() {
+    if (!this.enabled) return;
+    this.ensureContext();
+    if (!this.ctx) return;
+
+    const now = this.ctx.currentTime;
+    // C6, E6, G6, B6, C7, E7 (仙境星光豎琴升序琶音)
+    const freqs = [1046.50, 1318.51, 1567.98, 1975.53, 2093.00, 2637.02];
+    freqs.forEach((freq, i) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const noteTime = now + i * 0.045;
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, noteTime);
+
+      gain.gain.setValueAtTime(0.001, noteTime);
+      gain.gain.linearRampToValueAtTime(0.12, noteTime + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0008, noteTime + 0.45);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(noteTime);
+      osc.stop(noteTime + 0.5);
+    });
+  }
 }
 
 // 實例化全域音效控制器
@@ -4897,6 +5167,8 @@ if (typeof window !== 'undefined') {
   soundEngine = window.soundEngine;
 }
 
+
+/* ===== pet-renderer.js ===== */
 /**
  * 上林神寵運動養成系統 - 呆萌神寵 SVG 渲染器 (pet-renderer.js)
  * 渲染五大蛋系與 35 種神寵外觀，支援：
@@ -4987,16 +5259,10 @@ class PetRenderer {
         <!-- 影子 -->
         <ellipse cx="160" cy="275" rx="70" ry="16" fill="rgba(74, 62, 61, 0.15)" class="pet-ground-shadow" />
 
-        <!-- 飾品底層 (如飛羽緞帶、斗篷) -->
-        ${accessory && (accessory.id === 'brave_cloak' || accessory.id === 'feather_ribbon') ? accessorySvg : ''}
-
-        <!-- 神寵本體 -->
+        <!-- 神寵本體 (無多餘飾品干擾，純淨立體) -->
         <g class="pet-body-group" filter="url(#soft-shadow)">
           ${bodySvg}
         </g>
-
-        <!-- 飾品上層 (如心動光環、星願音符) -->
-        ${accessory && (accessory.id === 'heart_aura' || accessory.id === 'star_note') ? accessorySvg : ''}
       </svg>
     `;
   }
@@ -5536,8 +5802,7 @@ class PetRenderer {
     const imgSrc = customImg || defaultImagePath;
 
     // SVG 備份繪製
-    const svgFallback = this.generatePetSvg(elementId, stage, branch, expression, accessory);
-    const accessorySvg = this.drawAccessory(accessory);
+    const svgFallback = this.generatePetSvg(elementId, stage, branch, expression, null);
 
     return `
       <div class="pet-figure-wrapper expr-${expression}" style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
@@ -5554,15 +5819,6 @@ class PetRenderer {
         <div class="pet-svg-fallback-box" style="${customImg ? 'display: none;' : 'display: block;'} width: 100%; height: 100%;">
           ${svgFallback}
         </div>
-
-        <!-- 飾品疊加層 (若有圖片且配戴飾品時浮現) -->
-        ${accessory ? `
-          <div class="pet-accessory-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
-            <svg viewBox="0 0 320 320" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-              ${accessorySvg}
-            </svg>
-          </div>
-        ` : ''}
       </div>
     `;
   }
@@ -5648,6 +5904,8 @@ if (typeof window !== 'undefined') {
   petRenderer = window.petRenderer;
 }
 
+
+/* ===== tree-renderer.js ===== */
 /**
  * 上林神寵運動養成系統 - 健康促進生命樹 SVG 渲染器 (tree-renderer.js)
  * 完全依據 PDF-TREE 規範繪製五大生長階段：
@@ -5959,6 +6217,8 @@ if (typeof window !== 'undefined') {
   treeRenderer = window.treeRenderer;
 }
 
+
+/* ===== storage.js ===== */
 /**
  * 上林神寵運動養成系統 - 資料儲存與多使用者管理 (storage.js)
  * 支援：
@@ -6773,6 +7033,8 @@ if (typeof window !== 'undefined') {
   storageManager = window.storageManager;
 }
 
+
+/* ===== app.js ===== */
 /**
  * 上林神寵運動養成系統 - 應用程式主控制器 (app.js)
  * 100% 串接演算法、渲染器、音效與儲存引擎
@@ -7084,7 +7346,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // 能力結構判定與浪漫飾品
+    // 能力結構判定與專屬裝備道具
     const structTag = document.getElementById('structure-type-tag');
     const structDesc = document.getElementById('structure-desc-text');
     const accessoryBox = document.getElementById('accessory-display-container');
@@ -7092,26 +7354,59 @@ document.addEventListener('DOMContentLoaded', () => {
     if (structTag) structTag.textContent = `✨ ${structure.structureName}`;
     if (structDesc) structDesc.textContent = structure.desc;
 
-    if (accessoryBox) {
-      if (structure.accessory) {
-        accessoryBox.innerHTML = `
-          <div class="accessory-display-tag">
-            <span class="accessory-icon">${structure.accessory.icon}</span>
-            <div>
-              <div class="accessory-name">佩戴飾品：${structure.accessory.name}</div>
-              <div class="accessory-desc">${structure.accessory.desc} (第三能力 ≥ 15% 觸發)</div>
-            </div>
+    // 1. 神寵展台右上角專屬裝備道具展示托盤 (得到時呈現在神寵角色畫面右上角)
+    const floatingTray = document.getElementById('pet-floating-items-tray');
+    const obtainedItems = structure.obtainedItems || [];
+    if (floatingTray) {
+      if (obtainedItems.length > 0) {
+        floatingTray.innerHTML = obtainedItems.map(item => `
+          <div class="pet-equipped-badge" 
+               title="【${item.icon} ${item.name}】${item.fullName}：${item.desc}"
+               onclick="if(window.soundEngine) window.soundEngine.playMagicItemSound(); this.classList.add('pop-anim'); setTimeout(()=>this.classList.remove('pop-anim'), 600);">
+            <span>${item.icon}</span>
+            <div class="item-tooltip-bubble">${item.icon} ${item.name}</div>
           </div>
-        `;
-        accessoryBox.style.display = 'block';
+        `).join('');
+        floatingTray.style.display = 'flex';
       } else {
-        accessoryBox.innerHTML = `
-          <div style="font-size: 11px; color: var(--text-subtle); padding: 8px 0;">
-            💫 提示：當單主型或雙能交織型的第三能力能量達到 15% 時，神寵將自動佩戴專屬浪漫飾品！
-          </div>
-        `;
-        accessoryBox.style.display = 'block';
+        floatingTray.innerHTML = '';
+        floatingTray.style.display = 'none';
       }
+    }
+
+    // 2. 能力結構卡片內專屬裝備道具總覽庫
+    if (accessoryBox) {
+      const allItems = CONFIG.MAGIC_ITEMS || {};
+      const itemKeys = Object.keys(allItems);
+
+      accessoryBox.innerHTML = `
+        <div style="margin-top: 10px;">
+          <div style="font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+            <span>🎒 專屬寶物裝備背包 (${obtainedItems.length} / ${itemKeys.length} 件獲得)</span>
+            <span style="font-size: 11px; color: var(--sakura-pink);">獲得時即呈現在右上角 ✨</span>
+          </div>
+          <div class="magic-items-grid">
+            ${itemKeys.map(key => {
+              const item = allItems[key];
+              const isUnlocked = obtainedItems.some(o => o.id === item.id);
+              return `
+                <div class="magic-item-slot ${isUnlocked ? 'is-unlocked' : 'is-locked'}" 
+                     title="${item.name}：${item.desc} (${item.unlockTip})"
+                     onclick="if(window.soundEngine) window.soundEngine.playMagicItemSound();">
+                  <div class="magic-item-icon-box">
+                    <span>${item.icon}</span>
+                  </div>
+                  <div class="magic-item-info">
+                    <div class="magic-item-name">${item.name} <span class="magic-item-status">${isUnlocked ? '✨已獲得' : '🔒未解鎖'}</span></div>
+                    <div class="magic-item-condition">${isUnlocked ? item.fullName : item.unlockTip}</div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+      accessoryBox.style.display = 'block';
     }
 
     // 餵食盤球球數值
