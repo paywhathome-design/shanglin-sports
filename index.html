@@ -2199,6 +2199,227 @@ body::before {
   line-height: 1.4;
 }
 
+/* ==========================================================================
+   全載具自適配響應式設計 (RWD Responsive Design for Header & Global Layout)
+   完美支援：手機 (iPhone/Android 320px~480px)、平板 (iPad 600px~900px)、筆電與桌機
+   ========================================================================== */
+
+/* 1. 平板與中型螢幕 (<= 900px) */
+@media (max-width: 900px) {
+  .app-container {
+    padding: 14px 16px 70px;
+  }
+
+  .site-header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px 18px;
+    gap: 12px;
+  }
+
+  .brand-section {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .brand-school-logo {
+    width: 44px;
+    height: 44px;
+  }
+
+  .brand-group-photo-pill {
+    width: 80px;
+    height: 38px;
+  }
+
+  .brand-text-wrap h1 {
+    font-size: 19px;
+  }
+
+  .brand-subtitle {
+    font-size: 12px;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+}
+
+/* 2. 手機螢幕 (<= 640px) */
+@media (max-width: 640px) {
+  .app-container {
+    padding: 8px 10px 60px;
+  }
+
+  .site-header {
+    padding: 12px 12px;
+    border-radius: 18px;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .brand-section {
+    gap: 8px;
+    width: 100%;
+  }
+
+  .header-brand-media {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .brand-school-logo {
+    width: 38px;
+    height: 38px;
+  }
+
+  .brand-group-photo-pill {
+    width: 68px;
+    height: 34px;
+    border-radius: 12px;
+  }
+
+  .brand-text-wrap {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .brand-text-wrap h1 {
+    font-size: 16px;
+    letter-spacing: -0.3px;
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  .brand-subtitle {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    max-width: 100%;
+  }
+
+  /* 操作區：智慧分層佈局 */
+  .header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 100%;
+  }
+
+  /* 第一層：使用者身分膠囊滿版延伸 */
+  #header-user-pill, .current-user-pill {
+    order: 1;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+  }
+
+  .current-user-pill .user-info-text {
+    flex: 1;
+    justify-content: flex-start;
+    overflow: hidden;
+    gap: 4px;
+  }
+
+  .current-user-pill .user-name-title {
+    font-size: 12px !important;
+    flex-shrink: 0;
+  }
+
+  .current-user-pill .user-egg-badge {
+    font-size: 11px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .user-avatar-tag {
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 14px !important;
+  }
+
+  /* 第二層：三顆功能按鍵平均排列 */
+  #header-cloud-badge, .cloud-sync-badge {
+    order: 2;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 6px 8px !important;
+    font-size: 11px !important;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #header-register-btn, .header-register-btn {
+    order: 3;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 6px 8px !important;
+    font-size: 11px !important;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #sound-toggle-btn {
+    order: 4;
+    flex: 0 0 auto;
+    min-width: 65px;
+    padding: 6px 8px !important;
+    font-size: 11px !important;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* 主分頁按鈕手機適配 */
+  .main-tabs-nav {
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .tab-nav-btn {
+    padding: 7px 10px;
+    font-size: 12px;
+    border-radius: 14px;
+    gap: 3px;
+    flex: 1 1 auto;
+    min-width: 68px;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* 3. 極窄手機 (<= 380px, 如 iPhone SE) */
+@media (max-width: 380px) {
+  .brand-group-photo-pill {
+    display: none; /* 極小螢幕隱藏大合照按鈕，確保校名標題有完整空間 */
+  }
+
+  .brand-text-wrap h1 {
+    font-size: 15px;
+  }
+
+  .brand-subtitle {
+    display: none; /* 極小螢幕隱藏副標題，維持高度清爽 */
+  }
+
+  .cloud-sync-badge, #header-register-btn, #sound-toggle-btn {
+    font-size: 10px !important;
+    padding: 5px 6px !important;
+  }
+
+  .tab-nav-btn {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+}
+
 </style>
 </head>
 <body>
