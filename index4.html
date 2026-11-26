@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>上林神寵運動養成系統 - 國小健康促進 × 運動紀錄 × AI 神寵養成</title>
+  <!-- Google Fonts: 圓潤呆萌字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- ====================================================================
+         頂部導航列 (Romantic Pastel Header)
+         ==================================================================== -->
+    <header class="site-header">
+      <!-- 滿版背景團體照 (調淡透明度，不影響其他按鍵清晰度) -->
+      <div class="header-bg-photo" style="background-image: url('assets/images/group_photo.jpg');"></div>
+      <div class="header-bg-overlay"></div>
+
+      <div class="brand-section">
+        <!-- 替換原先的 🐣💖 為上林國小校徽與師生團體照 -->
+        <div class="header-brand-media">
+          <img src="assets/images/school_logo.png" alt="上林國小校徽" class="brand-school-logo" title="新北市雙溪區上林國小校徽" />
+          <div class="brand-group-photo-pill" id="header-group-photo-btn" title="點擊檢視「美好上林，一起同行!」師生大合照">
+            <img src="assets/images/group_photo.jpg" alt="上林國小師生團體照" class="brand-group-photo-img" />
+          </div>
+        </div>
+        <div class="brand-text-wrap">
+          <h1>上林神寵運動養成系統</h1>
+          <div class="brand-subtitle">國小健康促進 × 運動紀錄 × AI 神寵分支進化</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- 雲端試算表連線狀態膠囊 -->
+        <div class="cloud-sync-badge" id="header-cloud-badge" title="Google 試算表雲端同步狀態 (點擊可檢視或設定)" style="display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 20px; background: rgba(82, 183, 136, 0.15); color: #2D6A4F; cursor: pointer;">
+          <span id="cloud-badge-icon">☁️</span>
+          <span id="cloud-badge-text">本機模式</span>
+        </div>
+
+        <!-- 新使用者註冊欄位按鈕 -->
+        <button class="cute-btn cute-btn-primary" id="header-register-btn" title="新同學或新老師？點擊快速註冊新帳號！">
+          <span>✨</span> 新使用者註冊
+        </button>
+
+        <!-- 學生/教師身分切換膠囊 -->
+        <div class="current-user-pill" id="header-user-pill" title="點擊切換或綜整管理帳號">
+          <div class="user-avatar-tag" id="header-user-avatar">🔥</div>
+          <div class="user-info-text">
+            <span class="user-name-title" id="header-user-name">晴晴</span>
+            <span class="user-egg-badge"><span id="header-user-class">六年一班</span> · <span id="header-user-egg-badge">🔥 美德之火</span></span>
+          </div>
+          <span style="font-size: 12px; color: var(--sakura-pink);">▼</span>
+        </div>
+
+        <!-- 音效切換開關 -->
+        <button class="cute-btn cute-btn-outline" id="sound-toggle-btn" title="切換音效">
+          🔔 音效開
+        </button>
+      </div>
+    </header>
+
+    <!-- ====================================================================
+         主標籤頁導航 (Tabs Navigation)
+         ==================================================================== -->
+    <nav class="main-tabs-nav">
+      <button class="tab-nav-btn active" data-tab="tab-pet">
+        <span>🐾</span> 我的神寵
+      </button>
+      <button class="tab-nav-btn" data-tab="tab-workout">
+        <span>📝</span> 運動打卡
+      </button>
+      <button class="tab-nav-btn" data-tab="tab-health">
+        <span>🌳</span> 健康促進生命樹
+      </button>
+      <button class="tab-nav-btn" data-tab="tab-compendium">
+        <span>📖</span> 神寵圖鑑
+      </button>
+      <button class="tab-nav-btn" data-tab="tab-lab">
+        <span>🔬</span> 教師模擬實驗室
+      </button>
+    </nav>
+
+    <!-- ====================================================================
+         Tab 1: 我的神寵 (My Divine Pet)
+         ==================================================================== -->
+    <main id="tab-pet" class="tab-content-panel active">
+      <div class="pet-hub-grid">
+        <!-- 左側：神寵互動展台 -->
+        <div class="pet-stage-card">
+          <div class="pet-stage-header">
+            <span class="pet-element-tag" id="pet-element-tag">🔥 美德之火</span>
+            <span class="pet-stage-badge" id="pet-stage-badge">幼年期 (第 2 階)</span>
+          </div>
+
+          <div class="pet-stage-name-box">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+              <h2 id="pet-display-name">熔岩獸</h2>
+              <button class="cute-btn cute-btn-outline" id="btn-open-pet-picker" style="padding: 4px 10px; font-size: 12px; border-radius: var(--radius-pill);" title="點擊自行選擇神寵角色與系別">
+                <span>🎨</span> 更換神寵角色
+              </button>
+            </div>
+            <p id="pet-display-desc" style="font-size: 13px; color: var(--text-subtle); margin-top: 4px;">
+              腳踩軟綿綿的熔岩棉花掌，跑動時會撲哧撲哧冒出橘紅色愛心小煙圈。
+            </p>
+          </div>
+
+          <!-- 神寵互動立繪區 (點擊摸摸撒嬌) -->
+          <div class="pet-canvas-container" id="pet-interactive-container" title="點擊摸摸我~ 會發出呼嚕聲與愛心喔！">
+            <div id="pet-display-wrapper" style="width: 100%; height: 100%;"></div>
+            <div class="pet-touch-hint">點擊神寵摸摸撒嬌 💕</div>
+          </div>
+
+          <!-- 成長 EXP 進度條與每週 12 EXP 保護 -->
+          <div class="pet-exp-tracker-box">
+            <div class="exp-tracker-header">
+              <span>🌟 成長累積：<strong id="pet-exp-current" style="color: var(--sakura-pink);">28 EXP</strong></span>
+              <span id="pet-exp-next" style="color: var(--text-subtle);">距離下階段還差 32 EXP</span>
+            </div>
+            <div class="exp-bar-track">
+              <div class="exp-bar-fill" id="pet-exp-bar-fill" style="width: 45%;"></div>
+            </div>
+            <div class="exp-protection-reminder" id="pet-exp-weekly-status">
+              🛡️ 本週成長保護：已累積 <strong>6 / 12 EXP</strong>（本週還能成長 6 EXP）
+            </div>
+          </div>
+
+          <!-- 運動能量餵食盤 -->
+          <div class="feeding-tray-box">
+            <div class="feeding-tray-title">
+              <span>🥣 今日運動能量餵食盤</span>
+              <span style="font-size: 11px; color: var(--text-subtle); font-weight: normal;">(點擊能量球餵食神寵，觀賞咀嚼動畫)</span>
+            </div>
+            <div class="energy-balls-row">
+              <div class="energy-ball-item" data-ability="endurance" title="點擊餵食耐力能量">
+                <div class="ball-circle endurance">❤️</div>
+                <span class="ball-val-text" id="feed-ball-endurance">14.5</span>
+              </div>
+              <div class="energy-ball-item" data-ability="strength" title="點擊餵食肌力能量">
+                <div class="ball-circle strength">💪</div>
+                <span class="ball-val-text" id="feed-ball-strength">4.8</span>
+              </div>
+              <div class="energy-ball-item" data-ability="agility" title="點擊餵食敏捷能量">
+                <div class="ball-circle agility">⚡</div>
+                <span class="ball-val-text" id="feed-ball-agility">12.2</span>
+              </div>
+              <div class="energy-ball-item" data-ability="coordination" title="點擊餵食協調能量">
+                <div class="ball-circle coordination">🎯</div>
+                <span class="ball-val-text" id="feed-ball-coordination">6.5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右側：四大能力能量分佈與結構判定 -->
+        <div class="pet-stats-card">
+          <!-- 四大能力能量分離進度條 -->
+          <div class="marshmallow-card">
+            <div class="card-title-row">
+              <h3><span>📊</span> 四大運動吸收能量</h3>
+              <span style="font-size: 11px; color: var(--text-subtle);">非評分，象徵神寵吸收養分</span>
+            </div>
+
+            <div class="ability-bars-list">
+              <!-- 耐力 -->
+              <div class="ability-bar-unit">
+                <div class="ability-info-line">
+                  <div class="ability-name-col">
+                    <span>❤️</span> <strong>耐力</strong>
+                    <span style="font-size: 11px; color: var(--text-subtle);">(心肺慢跑、長時跑動)</span>
+                  </div>
+                  <div class="ability-value-col" id="val-endurance">0.00 點 (0.0%)</div>
+                </div>
+                <div class="ability-progress-track">
+                  <div class="ability-progress-fill fill-endurance" id="bar-endurance" style="width: 0%;"></div>
+                </div>
+                <div class="ability-warm-msg" id="msg-endurance">耐力能量尚在沉睡中，等候探索✨</div>
+              </div>
+
+              <!-- 肌力 -->
+              <div class="ability-bar-unit">
+                <div class="ability-info-line">
+                  <div class="ability-name-col">
+                    <span>💪</span> <strong>肌力</strong>
+                    <span style="font-size: 11px; color: var(--text-subtle);">(衝刺、阻力上坡)</span>
+                  </div>
+                  <div class="ability-value-col" id="val-strength">0.00 點 (0.0%)</div>
+                </div>
+                <div class="ability-progress-track">
+                  <div class="ability-progress-fill fill-strength" id="bar-strength" style="width: 0%;"></div>
+                </div>
+                <div class="ability-warm-msg" id="msg-strength">肌力能量尚在沉睡中，等候探索✨</div>
+              </div>
+
+              <!-- 敏捷 -->
+              <div class="ability-bar-unit">
+                <div class="ability-info-line">
+                  <div class="ability-name-col">
+                    <span>⚡</span> <strong>敏捷</strong>
+                    <span style="font-size: 11px; color: var(--text-subtle);">(加減速、變向反應)</span>
+                  </div>
+                  <div class="ability-value-col" id="val-agility">0.00 點 (0.0%)</div>
+                </div>
+                <div class="ability-progress-track">
+                  <div class="ability-progress-fill fill-agility" id="bar-agility" style="width: 0%;"></div>
+                </div>
+                <div class="ability-warm-msg" id="msg-agility">敏捷能量尚在沉睡中，等候探索✨</div>
+              </div>
+
+              <!-- 協調 -->
+              <div class="ability-bar-unit">
+                <div class="ability-info-line">
+                  <div class="ability-name-col">
+                    <span>🎯</span> <strong>協調</strong>
+                    <span style="font-size: 11px; color: var(--text-subtle);">(投擲拋接、扯鈴跳繩)</span>
+                  </div>
+                  <div class="ability-value-col" id="val-coordination">0.00 點 (0.0%)</div>
+                </div>
+                <div class="ability-progress-track">
+                  <div class="ability-progress-fill fill-coordination" id="bar-coordination" style="width: 0%;"></div>
+                </div>
+                <div class="ability-warm-msg" id="msg-coordination">協調能量尚在沉睡中，等候探索✨</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 能力結構判定與浪漫飾品 -->
+          <div class="marshmallow-card">
+            <div class="card-title-row">
+              <h3><span>🔮</span> 能力結構與專屬飾品</h3>
+            </div>
+
+            <div class="structure-badge-box">
+              <span class="structure-type-tag" id="structure-type-tag">✨ 雙能交織型</span>
+              <p id="structure-desc-text" style="font-size: 12px; color: var(--text-subtle);">
+                「耐力」與「敏捷」雙峰並峙，相輔相成！
+              </p>
+
+              <!-- 飾品卡片 -->
+              <div id="accessory-display-container"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ====================================================================
+         Tab 2: 運動打卡 (Daily Exercise Logger)
+         ==================================================================== -->
+    <section id="tab-workout" class="tab-content-panel">
+      <div class="workout-logger-layout">
+        <!-- 左側：打卡表單 -->
+        <div class="marshmallow-card">
+          <div class="card-title-row">
+            <h3><span>🏃‍♀️</span> 填寫今日運動紀錄</h3>
+            <span class="daily-quota-badge" id="daily-quota-badge" style="font-size: 12px; background: rgba(82, 183, 136, 0.15); color: #2D6A4F; font-weight: 700; padding: 4px 10px; border-radius: 12px; transition: all 0.3s ease;">今日打卡：0 / 3 次</span>
+          </div>
+
+          <!-- 運動項目選擇 -->
+          <div class="form-group-cute">
+            <label class="form-label-cute"><span>⚽</span> 運動種類與玩法</label>
+            <select class="cute-select" id="sport-select"></select>
+            <span style="font-size: 11px; color: var(--text-subtle);">
+              💡 學生無需手動選能力，系統依官方玩法資料庫自動判定主次能力 (2:1 精確比例)！
+            </span>
+          </div>
+
+          <!-- 運動時間 -->
+          <div class="form-group-cute">
+            <label class="form-label-cute"><span>⏱️</span> 運動時間 (分鐘)</label>
+            <input type="number" class="cute-input" id="duration-input" value="30" min="1" max="300">
+          </div>
+
+          <!-- 主觀喘度三選一 -->
+          <div class="form-group-cute">
+            <label class="form-label-cute"><span>💓</span> 主觀感覺強度 (喘度)</label>
+            <div class="exertion-btn-group">
+              <button type="button" class="exertion-choice-btn" data-exertion="light">
+                <span style="font-size: 20px;">😌</span>
+                <span>輕鬆</span>
+                <span style="font-size: 10px; color: var(--text-subtle);">輕度</span>
+              </button>
+              <button type="button" class="exertion-choice-btn active" data-exertion="moderate">
+                <span style="font-size: 20px;">😅</span>
+                <span>有點喘</span>
+                <span style="font-size: 10px; color: var(--text-subtle);">中度 (MVPA)</span>
+              </button>
+              <button type="button" class="exertion-choice-btn" data-exertion="vigorous">
+                <span style="font-size: 20px;">🥵</span>
+                <span>很喘</span>
+                <span style="font-size: 10px; color: var(--text-subtle);">高強度 (MVPA)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 個人挑戰 Bonus -->
+          <div class="form-group-cute">
+            <label class="form-label-cute"><span>🌟</span> 個人挑戰 Bonus (獨立計算，只加 EXP)</label>
+            <div class="challenge-bonus-group">
+              <button type="button" class="bonus-choice-btn active" data-bonus="0">
+                <span class="bonus-title">一般／平常 (+0)</span>
+                <span class="bonus-desc">穩健常態運動</span>
+              </button>
+              <button type="button" class="bonus-choice-btn" data-bonus="1">
+                <span class="bonus-title">有意義的進步 (+1 EXP)</span>
+                <span class="bonus-desc">比平常更持久</span>
+              </button>
+              <button type="button" class="bonus-choice-btn" data-bonus="2">
+                <span class="bonus-title">個人挑戰 (+2 EXP)</span>
+                <span class="bonus-desc">突破自我極限！</span>
+              </button>
+            </div>
+            <span style="font-size: 11px; color: var(--text-subtle); margin-top: 4px;">
+              🔒 規則鐵律：Bonus 不進入四大能力、不影響外觀比例，每日上限 +2。
+            </span>
+          </div>
+
+          <!-- 提交打卡按鈕 -->
+          <button type="button" class="cute-btn cute-btn-primary" id="submit-workout-btn" style="width: 100%; padding: 16px; font-size: 16px; margin-top: 8px;">
+            <span>✨</span> 注入運動能量！完成今日打卡
+          </button>
+        </div>
+
+        <!-- 右側：即時演算法試算與今日歷史 -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <!-- 即時試算預覽 -->
+          <div class="marshmallow-card">
+            <div class="calc-preview-title">
+              <span>🔮 演算法即時試算預覽</span>
+            </div>
+
+            <div class="calc-detail-grid">
+              <div class="calc-cell">
+                <div class="calc-cell-label">運動項目</div>
+                <div class="calc-cell-val" id="preview-sport-name">慢跑</div>
+              </div>
+              <div class="calc-cell">
+                <div class="calc-cell-label">等級與基本能量</div>
+                <div class="calc-cell-val" id="preview-sport-level">Lv3 (6 點)</div>
+              </div>
+              <div class="calc-cell">
+                <div class="calc-cell-label">主要能力分配</div>
+                <div class="calc-cell-val" id="preview-primary-alloc">❤️ 耐力: +4.00</div>
+              </div>
+              <div class="calc-cell">
+                <div class="calc-cell-label">次要能力分配</div>
+                <div class="calc-cell-val" id="preview-secondary-alloc">無次要能力</div>
+              </div>
+              <div class="calc-cell" style="grid-column: span 2;">
+                <div class="calc-cell-label">預估獲得成長 EXP</div>
+                <div class="calc-cell-val" id="preview-exp-gain" style="color: var(--sakura-pink);">+2 EXP (活動 +2 / 挑戰 +0)</div>
+              </div>
+            </div>
+
+            <div id="preview-daily-cap-hint" style="font-size: 12px; margin-top: 10px; font-weight: 700;">
+              ✨ 今日能量累計 6.00 / 10.00 點，維持全額吸收。
+            </div>
+          </div>
+
+          <!-- 今日打卡紀錄表 -->
+          <div class="marshmallow-card">
+            <div class="card-title-row">
+              <h3><span>📋</span> 今日打卡歷史紀錄</h3>
+              <span style="font-size: 11px; color: var(--text-subtle);">同日多筆合併，四能力上限 10 點</span>
+            </div>
+
+            <div class="today-logs-table-wrap">
+              <table class="cute-table">
+                <thead>
+                  <tr>
+                    <th>運動玩法</th>
+                    <th>時間</th>
+                    <th>強度</th>
+                    <th>能力流向</th>
+                    <th>能量</th>
+                    <th>EXP</th>
+                  </tr>
+                </thead>
+                <tbody id="today-logs-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         Tab 3: 健康促進指標看板 & 生命樹
+         ==================================================================== -->
+    <section id="tab-health" class="tab-content-panel">
+      <div class="health-dashboard-wrap">
+        <!-- 個人 vs 全校/全班切換 -->
+        <div class="health-toggle-row">
+          <button class="cute-btn cute-btn-outline active" id="btn-health-personal">
+            <span>👤</span> 個人健康促進成果
+          </button>
+          <button class="cute-btn cute-btn-outline" id="btn-health-school">
+            <span>🏫</span> 全校/全班健康大數據
+          </button>
+        </div>
+
+        <!-- 四大健康成果指標 KPI 卡片 (依據 PDF 第四頁，與遊戲能量分離) -->
+        <div class="metrics-summary-grid">
+          <!-- 每週 MVPA 分鐘數 -->
+          <div class="metric-kpi-card">
+            <div class="kpi-icon-badge">⏱️</div>
+            <div class="kpi-title">每週中高強度活動 (MVPA)</div>
+            <div class="kpi-number-row">
+              <span class="kpi-big-num" id="kpi-mvpa-mins">120</span>
+              <span class="kpi-unit">分鐘</span>
+            </div>
+            <div class="kpi-goal-hint" id="kpi-mvpa-goal-hint">目標 ≥ 150 分鐘/週 (還差 30 分)</div>
+          </div>
+
+          <!-- 達成 60 分鐘活動目標天數 -->
+          <div class="metric-kpi-card">
+            <div class="kpi-icon-badge">🎯</div>
+            <div class="kpi-title">每日 60 分鐘活動達標天數</div>
+            <div class="kpi-number-row">
+              <span class="kpi-big-num" id="kpi-days-60min">3</span>
+              <span class="kpi-unit">天</span>
+            </div>
+            <div class="kpi-goal-hint" style="color: var(--sakura-pink);">連結 WHO / 教育部兒童運動指引</div>
+          </div>
+
+          <!-- 肌力/骨骼強化天數 -->
+          <div class="metric-kpi-card">
+            <div class="kpi-icon-badge">💪</div>
+            <div class="kpi-title">肌力／骨骼強化活動</div>
+            <div class="kpi-number-row">
+              <span class="kpi-big-num" id="kpi-muscle-days">2</span>
+              <span class="kpi-unit">天</span>
+            </div>
+            <div class="kpi-goal-hint" style="color: #F77F00;">衝刺跑、跳繩、上坡騎車等</div>
+          </div>
+
+          <!-- 活動多樣性 -->
+          <div class="metric-kpi-card">
+            <div class="kpi-icon-badge">🌈</div>
+            <div class="kpi-title">已探索運動多樣性</div>
+            <div class="kpi-number-row">
+              <span class="kpi-big-num" id="kpi-diversity-count">4</span>
+              <span class="kpi-unit">種玩法</span>
+            </div>
+            <div class="kpi-goal-hint" style="color: var(--lavender-violet);">全方位身心均衡成長</div>
+          </div>
+        </div>
+
+        <!-- 健康促進生命樹大舞台 (PDF-TREE 5 階段) -->
+        <div class="life-tree-stage-card">
+          <div class="card-title-row" style="width: 100%;">
+            <h3><span>🌳</span> 健康促進生命樹 (隨運動成長繁盛)</h3>
+            <span class="pet-stage-badge" id="tree-mvpa-indicator">累計 MVPA：120 分鐘</span>
+          </div>
+
+          <!-- 生命樹 SVG 畫布 -->
+          <div class="tree-canvas-box" id="life-tree-svg-container"></div>
+
+          <!-- 當前生命樹階段說明 -->
+          <div class="tree-level-desc-box">
+            <h4 id="tree-stage-name" style="color: var(--mint-green); font-size: 16px; margin-bottom: 4px;">
+              第 3 階：挺拔綠葉小樹 🌳
+            </h4>
+            <p id="tree-stage-desc" style="font-size: 13px; color: var(--text-subtle);">
+              樹幹挺拔筆直，枝椏間生長出豐厚綠葉，象徵學童每週運動達到 150 分鐘良好標準！
+            </p>
+          </div>
+
+          <!-- 生命樹 5 階成長里程碑 (每階 4,500 分鐘進階標準) -->
+          <div class="tree-milestones-row" id="tree-milestones-row">
+            <div class="tree-milestone-chip" data-milestone="1">
+              <span class="milestone-badge">第 1 階</span>
+              <span class="milestone-icon">🌱</span>
+              <span class="milestone-title">綠色嫩芽</span>
+              <span class="milestone-target" id="milestone-target-1">0 分鐘</span>
+            </div>
+            <div class="tree-milestone-arrow">➔</div>
+            <div class="tree-milestone-chip" data-milestone="2">
+              <span class="milestone-badge">第 2 階</span>
+              <span class="milestone-icon">🌿</span>
+              <span class="milestone-title">成長幼苗</span>
+              <span class="milestone-target" id="milestone-target-2">4,500 分鐘</span>
+            </div>
+            <div class="tree-milestone-arrow">➔</div>
+            <div class="tree-milestone-chip" data-milestone="3">
+              <span class="milestone-badge">第 3 階</span>
+              <span class="milestone-icon">🌳</span>
+              <span class="milestone-title">挺拔小樹</span>
+              <span class="milestone-target" id="milestone-target-3">9,000 分鐘</span>
+            </div>
+            <div class="tree-milestone-arrow">➔</div>
+            <div class="tree-milestone-chip" data-milestone="4">
+              <span class="milestone-badge">第 4 階</span>
+              <span class="milestone-icon">🌲</span>
+              <span class="milestone-title">繁茂大樹</span>
+              <span class="milestone-target" id="milestone-target-4">13,500 分鐘</span>
+            </div>
+            <div class="tree-milestone-arrow">➔</div>
+            <div class="tree-milestone-chip" data-milestone="5">
+              <span class="milestone-badge">第 5 階</span>
+              <span class="milestone-icon">🏰</span>
+              <span class="milestone-title">樹屋遊樂園</span>
+              <span class="milestone-target" id="milestone-target-5">18,000 分鐘</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         Tab 4: 神寵圖鑑 (Pet Illustrated Compendium)
+         ==================================================================== -->
+    <section id="tab-compendium" class="tab-content-panel">
+      <div class="compendium-container">
+        <!-- 蛋系篩選按鈕列 -->
+        <div class="compendium-filter-row">
+          <button class="filter-egg-btn active" data-filter="all">🌟 全部神寵 (35隻)</button>
+          <button class="filter-egg-btn" data-filter="flame">🔥 美德-烈焰系</button>
+          <button class="filter-egg-btn" data-filter="wave">🌊 健康-碧浪系</button>
+          <button class="filter-egg-btn" data-filter="forest">🌿 生態-森靈系</button>
+          <button class="filter-egg-btn" data-filter="sky">☁️ 樂學-雲翼系</button>
+          <button class="filter-egg-btn" data-filter="shadow">🔮 韌性-暗影系</button>
+        </div>
+
+        <!-- 批次匯入神寵圖檔功能卡 (僅管理員/師長顯示，學生端隱藏) -->
+        <div class="marshmallow-card" id="batch-upload-card" style="padding: 18px 24px;">
+          <div class="card-title-row" style="margin-bottom: 8px;">
+            <h3><span>📷</span> 匯入 35 隻神寵圖片</h3>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="cute-btn cute-btn-primary" id="btn-trigger-upload-files" style="padding: 6px 16px; font-size: 13px;">
+                <span>📁</span> 選擇圖片批次上傳
+              </button>
+            </div>
+          </div>
+          <p style="font-size: 12px; color: var(--text-subtle); line-height: 1.6;">
+            💡 <strong>兩種匯入方式</strong>：<br>
+            1. <strong>網頁批次上傳（免開資料夾）</strong>：點擊「選擇圖片批次上傳」或直接拖曳圖片到本頁面，支援一次選取 35 張圖片，系統自動依「神寵名稱」（如 <code>小烈焰.png</code>、<code>熔岩獸.png</code>）自動配對儲存！<br>
+            2. <strong>本地目錄放置</strong>：亦可直接將圖檔放進專案目錄 <code>assets/pets/</code> 中（例如 <code>小烈焰.png</code> 或 <code>flame_1.png</code>），系統會自動偵測載入。
+          </p>
+          <input type="file" id="batch-pet-image-input" multiple accept="image/*" style="display: none;">
+          <div id="batch-upload-status" style="margin-top: 8px; font-size: 12px; font-weight: 700; color: var(--sakura-pink); display: none;"></div>
+        </div>
+
+        <!-- 圖鑑卡片網格 -->
+        <div class="compendium-grid" id="compendium-pets-grid"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         Tab 5: 教師模擬實驗室 (Teacher Simulation Lab)
+         ==================================================================== -->
+    <section id="tab-lab" class="tab-content-panel">
+      <div class="lab-container-grid">
+        <!-- 左側：實驗控制台 -->
+        <div class="marshmallow-card">
+          <div class="card-title-row">
+            <h3><span>⚙️</span> 教師模擬與演算法壓力測試</h3>
+          </div>
+
+          <div class="lab-control-panel">
+            <!-- 時間快轉 -->
+            <div>
+              <div style="font-weight: 700; font-size: 13px; margin-bottom: 6px;">⏳ 時間快轉測試</div>
+              <div class="lab-btn-row">
+                <button class="cute-btn cute-btn-outline" id="lab-btn-skip-day">⏩ 快轉 1 天 (結算昨日)</button>
+                <button class="cute-btn cute-btn-outline" id="lab-btn-skip-week">🗓️ 快轉 1 週 (驗證每週12 EXP上限重置)</button>
+              </div>
+            </div>
+
+            <!-- 直接進化突破門檻測試 -->
+            <div style="margin-top: 12px;">
+              <div style="font-weight: 700; font-size: 13px; margin-bottom: 6px;">🌟 突破進化門檻測試 (觸發奇蹟盛典)</div>
+              <div class="lab-btn-row">
+                <button class="cute-btn cute-btn-outline" id="lab-btn-stage-1">階1 孵化期 (8 EXP)</button>
+                <button class="cute-btn cute-btn-outline" id="lab-btn-stage-2">階2 幼年期 (25 EXP)</button>
+                <button class="cute-btn cute-btn-outline" id="lab-btn-stage-3">階3 成長期 (60 EXP)</button>
+                <button class="cute-btn cute-btn-outline" id="lab-btn-stage-4">階4 進階期 (105 EXP)</button>
+                <button class="cute-btn cute-btn-outline" id="lab-btn-stage-5">階5 深化期 (160 EXP)</button>
+                <button class="cute-btn cute-btn-outline" id="lab-btn-stage-6">階6 最終期 (225 EXP)</button>
+              </div>
+            </div>
+
+            <!-- 演算法核心規則驗證 -->
+            <div style="margin-top: 12px;">
+              <div style="font-weight: 700; font-size: 13px; margin-bottom: 6px;">🧪 演算法邊界驗證</div>
+              <div class="lab-btn-row">
+                <button class="cute-btn cute-btn-outline" id="lab-btn-test-antifarm">驗證防刷每日 10 點上限等比縮放</button>
+                <button class="cute-btn cute-btn-outline" id="lab-btn-test-accessory">驗證第 3 能力 ≥ 15% 觸發浪漫飾品</button>
+                <button class="cute-btn cute-btn-outline" id="lab-btn-test-school-tree">🌳 驗證全校生命樹 4500分/階進階</button>
+                <button class="cute-btn cute-btn-outline" id="lab-btn-test-daily-limit">⚡ 驗證學生每日打卡上限 3 次</button>
+                <button class="cute-btn cute-btn-outline" id="lab-btn-reset-data" style="color: #D90429;">🔄 重設為預設展示資料</button>
+              </div>
+            </div>
+
+            <!-- Google 試算表 (GAS) 雲端大數據資料庫設定 -->
+            <div style="margin-top: 14px; padding: 14px; background: rgba(82, 183, 136, 0.08); border: 1.5px dashed var(--mint-green); border-radius: 16px;">
+              <div style="font-weight: 800; font-size: 13px; color: var(--mint-green); margin-bottom: 6px;">
+                ☁️ Google 試算表 (GAS) 雲端大數據連線
+              </div>
+              <p style="font-size: 11px; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px;">
+                貼上已部署之 Google Apps Script 網頁應用程式網址，全校即刻自動啟用「個人跨裝置同步」與「全校 4,500 分鐘生命樹即時累計」：
+              </p>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <input type="url" id="lab-gas-url-input" placeholder="https://script.google.com/macros/s/AKfycb.../exec" style="flex: 1; min-width: 240px; padding: 8px 12px; border-radius: 12px; border: 1.5px solid var(--card-border); font-size: 12px;" />
+                <button class="cute-btn cute-btn-primary" id="lab-btn-save-gas" style="padding: 8px 16px; font-size: 12px;">
+                  <span>💾</span> 儲存並連線測試
+                </button>
+              </div>
+              <div id="lab-gas-status" style="margin-top: 8px; font-size: 12px; font-weight: 700; color: #2D6A4F;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右側：演算法主控台日誌 -->
+        <div class="marshmallow-card">
+          <div class="card-title-row">
+            <h3><span>💻</span> 實驗室演算法即時監控 Console</h3>
+          </div>
+          <div class="lab-log-box" id="lab-console-log">
+            <div>[系統就緒] 上林神寵運動養成演算法引擎 V4.0 封版初始化完成。</div>
+            <div>[規則驗證] 每日四能力能量上限鎖定 10.00 點；成長 Bonus 每日上限 +2 (只入 EXP)。</div>
+            <div>[規則驗證] 每週最終成長 EXP 上限 12；六大進化門檻 0-7-25-60-105-160 已載入。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ====================================================================
+       奇蹟蛻變盛典全螢幕彈窗 (Miracle Metamorphosis Celebration)
+       ==================================================================== -->
+  <div class="miracle-celebration-overlay" id="miracle-celebration-overlay">
+    <div class="celebration-modal-card">
+      <div class="miracle-title-ribbon">✨ 奇蹟蛻變盛典 ✨</div>
+      <div class="celebration-pet-thumb" id="celebration-pet-thumb"></div>
+      <div class="celebration-pet-name" id="celebration-pet-name">烈焰獸</div>
+      <div class="celebration-stage-desc" id="celebration-stage-desc">
+        神寵在燦爛晨曦與星辰和弦中完成了華麗蛻變！
+      </div>
+      <button class="cute-btn cute-btn-primary" id="celebration-confirm-btn" style="padding: 12px 36px; font-size: 16px;">
+        太棒了！一起繼續運動加油 ( > ‿ < )
+      </button>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       使用者管理與切換彈窗 (User Management & Switcher Modal)
+       ==================================================================== -->
+  <div class="modal-overlay-cute" id="user-switch-modal">
+    <!-- 學生模式鎖定卡片 (學生帳號登錄後限制不得切換) -->
+    <div class="modal-body-card student-lock-card" id="student-lock-card" style="display: none; max-width: 490px; text-align: center;">
+      <div class="modal-header-row" style="justify-content: flex-end; margin-bottom: 4px;">
+        <button class="cute-btn-icon-only modal-close-btn" data-modal="user-switch-modal">✕</button>
+      </div>
+      <div class="lock-shield-icon" style="font-size: 56px; margin-bottom: 12px; animation: floatBounce 2.5s infinite ease-in-out;">🔒</div>
+      <h3 style="font-size: 22px; font-weight: 800; color: var(--sakura-pink); margin-bottom: 8px;">
+        學生帳號鎖定保護中
+      </h3>
+      <p style="font-size: 13px; color: var(--text-dark); line-height: 1.6; margin-bottom: 18px; background: var(--peach-light); padding: 12px 16px; border-radius: 16px; border: 1px dashed var(--peach-pink);">
+        嗨，<strong id="lock-student-name">晴晴</strong>！為了維護校園資訊安全與每位小朋友的運動成果，<strong>學生帳號登入後限制任意切換至他人帳號</strong>，以防誤動或竄改其他同學的神寵與紀錄喔！( > ‿ < )💕
+      </p>
+
+      <div class="admin-unlock-section" style="border-top: 2px dashed var(--peach-pink); padding-top: 16px; text-align: left;">
+        <div style="font-weight: 800; font-size: 13px; color: var(--lavender-violet); margin-bottom: 6px;">
+          🔑 師長管理解鎖通道 (校長 / 主任 / 老師)
+        </div>
+        <p style="font-size: 11px; color: var(--text-subtle); margin-bottom: 10px;">
+          若需切換至行政處室管理員或協助學生調整資料，請師長輸入管理通關密碼：
+        </p>
+        <div style="display: flex; gap: 8px;">
+          <input type="password" class="cute-input" id="admin-unlock-passcode" placeholder="請輸入管理密碼 (預設: 888)" style="flex: 1;" />
+          <button class="cute-btn cute-btn-primary" id="btn-submit-unlock" style="white-space: nowrap; padding: 0 18px;">
+            解鎖管理 🔓
+          </button>
+        </div>
+        <div id="unlock-error-hint" style="color: #D90429; font-size: 12px; margin-top: 6px; font-weight: 700; display: none;"></div>
+      </div>
+
+      <!-- 新使用者快速註冊通道 -->
+      <div style="margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--peach-pink);">
+        <button type="button" class="cute-btn cute-btn-outline" id="btn-student-lock-register" style="width: 100%; padding: 8px; font-size: 13px;">
+          <span>✨</span> 我是新使用者？點此註冊專屬新帳號 🐣
+        </button>
+      </div>
+    </div>
+
+    <!-- 管理員全校帳號綜整管理中心卡片 (校長、學輔主任、生教組長、體育老師) -->
+    <div class="modal-body-card admin-dashboard-card" id="admin-dashboard-card" style="display: none; max-width: 920px; width: 95%;">
+      <div class="modal-header-row">
+        <div>
+          <h3 style="font-size: 21px; font-weight: 800; color: var(--text-dark); display: flex; align-items: center; gap: 8px;">
+            <span>🏫</span> 上林國小 · 全校帳號綜整管理中心
+          </h3>
+          <div style="font-size: 12px; color: var(--text-subtle); margin-top: 2px;">
+            校長、學輔主任、生教組長最高權限：綜整瀏覽、調整能力數值與刪除帳號
+          </div>
+        </div>
+        <button class="cute-btn-icon-only modal-close-btn" data-modal="user-switch-modal">✕</button>
+      </div>
+
+      <!-- 當前管理員身分膠囊與處室快捷切換 (去除姓氏，體育組長改為體育老師) -->
+      <div class="admin-current-identity-bar">
+        <div class="admin-identity-badge" id="admin-current-role-badge">
+          🏛️ 目前身分：校長 (校長室)
+        </div>
+        <div class="admin-fast-switch-btns">
+          <span style="font-size: 12px; font-weight: 700; color: var(--text-subtle);">快速切換處室：</span>
+          <button class="admin-role-btn" data-admin-id="adm_principal" title="切換為校長">🏛️ 校長</button>
+          <button class="admin-role-btn" data-admin-id="adm_director" title="切換為學輔主任">🛡️ 學輔主任</button>
+          <button class="admin-role-btn" data-admin-id="adm_discipline" title="切換為生教組長">⚖️ 生教組長</button>
+          <button class="admin-role-btn" data-admin-id="tch_001" title="切換為體育老師">🏅 體育老師</button>
+          <button class="admin-role-btn" data-admin-id="tch_general" title="切換為教師 (具管理與觀測權限)">🧑‍🏫 教師</button>
+        </div>
+      </div>
+
+      <!-- 統計數據指標列 -->
+      <div class="admin-overview-stats">
+        <div class="admin-stat-pill">
+          <span class="stat-num" id="stat-total-users">0</span>
+          <span class="stat-label">全校總帳號數</span>
+        </div>
+        <div class="admin-stat-pill">
+          <span class="stat-num" id="stat-student-count">0</span>
+          <span class="stat-label">在籍學童數</span>
+        </div>
+        <div class="admin-stat-pill">
+          <span class="stat-num" id="stat-staff-count">0</span>
+          <span class="stat-label">行政與師長數</span>
+        </div>
+      </div>
+
+      <!-- 篩選與搜尋操作列 -->
+      <div class="admin-filter-bar">
+        <div style="display: flex; gap: 10px; flex: 1; flex-wrap: wrap;">
+          <select class="cute-select" id="admin-class-filter" style="width: auto; min-width: 150px;">
+            <option value="all">🏫 全部班級與處室</option>
+          </select>
+          <input type="text" class="cute-input" id="admin-user-search" placeholder="🔍 搜尋學童姓名或班級..." style="flex: 1; min-width: 160px;" />
+        </div>
+        <button class="cute-btn cute-btn-outline" id="btn-toggle-register-form">
+          <span>➕</span> 註冊新學童 / 師長
+        </button>
+      </div>
+
+      <!-- 可折疊的新增註冊表單 -->
+      <div class="admin-register-collapse" id="admin-register-collapse" style="display: none;">
+        <h4 style="font-size: 15px; font-weight: 800; margin-bottom: 10px; color: var(--sakura-pink);">
+          <span>➕</span> 手動建立新學童／師長帳號
+        </h4>
+        <form id="new-user-register-form">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
+            <div class="form-group-cute" style="margin-bottom: 0;">
+              <label class="form-label-cute">姓名</label>
+              <input type="text" class="cute-input" id="reg-name" placeholder="例如：小明" required>
+            </div>
+            <div class="form-group-cute" style="margin-bottom: 0;">
+              <label class="form-label-cute">班級 / 處室</label>
+              <input type="text" class="cute-input" id="reg-grade-class" placeholder="例如：三年一班" required>
+            </div>
+            <div class="form-group-cute" style="margin-bottom: 0;">
+              <label class="form-label-cute">身分類別</label>
+              <select class="cute-select" id="reg-role">
+                <option value="student">學童 (運動養成神寵)</option>
+                <option value="general_teacher">教師 (具管理與觀測權限)</option>
+                <option value="teacher">體育老師</option>
+                <option value="discipline">生教組長</option>
+                <option value="director">學輔主任</option>
+                <option value="principal">校長</option>
+              </select>
+            </div>
+            <div class="form-group-cute" style="margin-bottom: 0;">
+              <label class="form-label-cute">命定寶貝蛋系</label>
+              <select class="cute-select" id="reg-egg-series">
+                <option value="flame">🔥 美德-烈焰蛋 (火系)</option>
+                <option value="wave">🌊 健康-碧浪蛋 (水系)</option>
+                <option value="forest">🌿 生態-森靈蛋 (木系)</option>
+                <option value="sky">☁️ 樂學-雲翼蛋 (風系)</option>
+                <option value="shadow">🔮 韌性-暗影蛋 (暗系)</option>
+              </select>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+            <button type="button" class="cute-btn cute-btn-outline" id="btn-cancel-register" style="padding: 6px 14px;">取消</button>
+            <button type="submit" class="cute-btn cute-btn-primary" style="padding: 6px 18px;">確認建立 🐣</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 全校學童與成員列表容器 -->
+      <div class="admin-user-cards-grid" id="admin-user-cards-grid">
+        <!-- 動態渲染各學童與成員卡片 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       學生資料與能量數值調整彈窗 (Student Data & Ability Adjustment Modal)
+       ==================================================================== -->
+  <div class="modal-overlay-cute" id="student-edit-modal">
+    <div class="modal-body-card" style="max-width: 520px; width: 92%;">
+      <div class="modal-header-row">
+        <div>
+          <h3 style="font-size: 20px; font-weight: 800; color: var(--text-dark);">
+            <span>✏️</span> 調整學童資料與能力能量
+          </h3>
+          <div style="font-size: 12px; color: var(--text-subtle);">
+            校長、學輔主任、生教組長專屬管理編輯功能
+          </div>
+        </div>
+        <button class="cute-btn-icon-only modal-close-btn" data-modal="student-edit-modal">✕</button>
+      </div>
+
+      <form id="student-edit-form">
+        <input type="hidden" id="edit-user-id" />
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+          <div class="form-group-cute" style="margin-bottom: 0;">
+            <label class="form-label-cute">姓名</label>
+            <input type="text" class="cute-input" id="edit-user-name" required />
+          </div>
+          <div class="form-group-cute" style="margin-bottom: 0;">
+            <label class="form-label-cute">班級</label>
+            <input type="text" class="cute-input" id="edit-user-class" required />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+          <div class="form-group-cute" style="margin-bottom: 0;">
+            <label class="form-label-cute">命定寶貝蛋系</label>
+            <select class="cute-select" id="edit-user-egg">
+              <option value="flame">🔥 美德-烈焰蛋 (火系)</option>
+              <option value="wave">🌊 健康-碧浪蛋 (水系)</option>
+              <option value="forest">🌿 生態-森靈蛋 (木系)</option>
+              <option value="sky">☁️ 樂學-雲翼蛋 (風系)</option>
+              <option value="shadow">🔮 韌性-暗影蛋 (暗系)</option>
+            </select>
+          </div>
+          <div class="form-group-cute" style="margin-bottom: 0;">
+            <label class="form-label-cute">累積成長 EXP</label>
+            <input type="number" class="cute-input" id="edit-user-exp" min="0" step="1" required />
+            <div style="font-size: 11px; color: var(--text-subtle); margin-top: 2px;">
+              階1(8)·階2(25)·階3(60)·階4(105)·階5(160)·階6(225)
+            </div>
+          </div>
+        </div>
+
+        <div style="border-top: 2px dashed var(--peach-pink); padding-top: 14px; margin-bottom: 16px;">
+          <div style="font-weight: 800; font-size: 14px; color: var(--sakura-pink); margin-bottom: 10px;">
+            📊 四大運動吸收能量調整 (非評分，吸收點數)
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group-cute" style="margin-bottom: 6px;">
+              <label class="form-label-cute" style="color: #FF5C8A;">❤️ 耐力能量點數</label>
+              <input type="number" class="cute-input" id="edit-user-endurance" min="0" step="0.1" required />
+            </div>
+            <div class="form-group-cute" style="margin-bottom: 6px;">
+              <label class="form-label-cute" style="color: #F77F00;">💪 肌力能量點數</label>
+              <input type="number" class="cute-input" id="edit-user-strength" min="0" step="0.1" required />
+            </div>
+            <div class="form-group-cute" style="margin-bottom: 6px;">
+              <label class="form-label-cute" style="color: #48CAE4;">⚡ 敏捷能量點數</label>
+              <input type="number" class="cute-input" id="edit-user-agility" min="0" step="0.1" required />
+            </div>
+            <div class="form-group-cute" style="margin-bottom: 6px;">
+              <label class="form-label-cute" style="color: #9D4EDD;">🎯 協調能量點數</label>
+              <input type="number" class="cute-input" id="edit-user-coordination" min="0" step="0.1" required />
+            </div>
+          </div>
+          <div style="font-size: 11px; color: var(--text-subtle); margin-top: 4px;">
+            💡 提示：儲存後系統將自動重新判定能力結構、主要能力與專屬浪漫飾品！
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <button type="button" class="cute-btn cute-btn-outline modal-close-btn" data-modal="student-edit-modal" style="padding: 8px 18px;">
+            取消
+          </button>
+          <button type="submit" class="cute-btn cute-btn-primary" style="padding: 8px 22px;">
+            💾 儲存並更新資料
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 師生團體照大圖檢視彈窗 -->
+  <div class="modal-overlay-cute" id="group-photo-modal">
+    <div class="modal-body-card" style="max-width: 840px; text-align: center;">
+      <div class="modal-header-row">
+        <h3><span>🎉</span> 上林國小健康活力團隊師生大合照</h3>
+        <button class="cute-btn-icon-only" id="group-photo-modal-close">✕</button>
+      </div>
+      <div style="border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-marshmallow); border: 3px solid var(--peach-pink); margin-bottom: 14px;">
+        <img src="assets/images/group_photo.jpg" alt="上林國小師生團體照" style="width: 100%; height: auto; display: block;" />
+      </div>
+      <p style="font-size: 18px; font-weight: 800; color: var(--sakura-pink); letter-spacing: 1px;">
+        「美好上林，一起同行!」💖✨
+      </p>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       專屬新使用者註冊彈窗 (Dedicated User Register Modal)
+       ==================================================================== -->
+  <div class="modal-overlay-cute" id="user-register-modal">
+    <div class="modal-body-card" style="max-width: 600px; width: 92%;">
+      <div class="modal-header-row">
+        <div>
+          <h3 style="font-size: 21px; font-weight: 800; color: var(--text-dark); display: flex; align-items: center; gap: 8px;">
+            <span>✨</span> 註冊全新神寵運動帳號
+          </h3>
+          <div style="font-size: 12px; color: var(--text-subtle);">
+            歡迎加入上林國小！填寫基本資料並自由挑選您的命定神寵角色 🐣
+          </div>
+        </div>
+        <button class="cute-btn-icon-only modal-close-btn" data-modal="user-register-modal">✕</button>
+      </div>
+
+      <form id="dedicated-register-form">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+          <div class="form-group-cute" style="margin-bottom: 0;">
+            <label class="form-label-cute">姓名</label>
+            <input type="text" class="cute-input" id="ded-reg-name" placeholder="請輸入姓名 (如：小明)" required />
+          </div>
+          <div class="form-group-cute" style="margin-bottom: 0;">
+            <label class="form-label-cute">班級 / 處室</label>
+            <input type="text" class="cute-input" id="ded-reg-class" placeholder="如：三年一班 或 學務處" required />
+          </div>
+        </div>
+
+        <div class="form-group-cute" style="margin-bottom: 16px;">
+          <label class="form-label-cute">身分類別</label>
+          <select class="cute-select" id="ded-reg-role">
+            <option value="student">🎒 學童 (以運動健康養成神寵)</option>
+            <option value="general_teacher">🧑‍🏫 教師 (具管理與觀測權限)</option>
+            <option value="teacher">🏅 體育老師 (具管理與觀測權限)</option>
+            <option value="discipline">⚖️ 生教組長 (具全校管理權限)</option>
+            <option value="director">🛡️ 學輔主任 (具全校管理權限)</option>
+            <option value="principal">🏛️ 校長 (具全校最高管理權限)</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label class="form-label-cute" style="margin-bottom: 8px; display: block;">
+            🎨 自由選擇第一階命定神寵蛋 (初始 0 EXP，達標解鎖後續進化形態)
+          </label>
+          <div class="pet-select-cards-grid" id="ded-reg-pet-grid">
+            <label class="pet-select-card active" data-series="flame">
+              <input type="radio" name="ded_egg_series" value="flame" checked style="display: none;" />
+              <div class="pet-select-card-icon">🔥</div>
+              <div class="pet-select-card-title">美德-烈焰</div>
+              <div class="pet-select-card-desc">命定第一階 · 美德-烈焰蛋 🥚</div>
+            </label>
+            <label class="pet-select-card" data-series="wave">
+              <input type="radio" name="ded_egg_series" value="wave" style="display: none;" />
+              <div class="pet-select-card-icon">🌊</div>
+              <div class="pet-select-card-title">健康-碧浪</div>
+              <div class="pet-select-card-desc">命定第一階 · 健康-碧浪蛋 🥚</div>
+            </label>
+            <label class="pet-select-card" data-series="forest">
+              <input type="radio" name="ded_egg_series" value="forest" style="display: none;" />
+              <div class="pet-select-card-icon">🌿</div>
+              <div class="pet-select-card-title">生態-森靈</div>
+              <div class="pet-select-card-desc">命定第一階 · 生態-森靈蛋 🥚</div>
+            </label>
+            <label class="pet-select-card" data-series="sky">
+              <input type="radio" name="ded_egg_series" value="sky" style="display: none;" />
+              <div class="pet-select-card-icon">☁️</div>
+              <div class="pet-select-card-title">樂學-雲翼</div>
+              <div class="pet-select-card-desc">命定第一階 · 樂學-雲翼蛋 🥚</div>
+            </label>
+            <label class="pet-select-card" data-series="shadow">
+              <input type="radio" name="ded_egg_series" value="shadow" style="display: none;" />
+              <div class="pet-select-card-icon">🔮</div>
+              <div class="pet-select-card-title">韌性-暗影</div>
+              <div class="pet-select-card-desc">命定第一階 · 韌性-暗影蛋 🥚</div>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="cute-btn cute-btn-primary" style="width: 100%; padding: 12px; font-size: 15px;">
+          確認註冊並開始運動養成 🐣✨
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       自由選擇神寵角色彈窗 (Pet Character Switcher Modal)
+       ==================================================================== -->
+  <div class="modal-overlay-cute" id="pet-character-modal">
+    <div class="modal-body-card" style="max-width: 580px; width: 92%;">
+      <div class="modal-header-row">
+        <div>
+          <h3 style="font-size: 21px; font-weight: 800; color: var(--text-dark); display: flex; align-items: center; gap: 8px;">
+            <span>🎨</span> 自行選擇第一階神寵守護蛋
+          </h3>
+          <div style="font-size: 12px; color: var(--text-subtle);">
+            每位師生初始皆從「命定第一階 寶貝蛋」開始！持續運動累積 EXP 才能破殼進化揭曉後續神寵，創造滿滿新鮮感 ✨
+          </div>
+        </div>
+        <button class="cute-btn-icon-only modal-close-btn" data-modal="pet-character-modal">✕</button>
+      </div>
+
+      <div class="pet-character-picker-grid" id="pet-character-picker-grid">
+        <!-- 動態渲染 5 大蛋系神寵選項 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 核心腳本載入 -->
+  <script src="js4/config.js"></script>
+  <script src="js4/algorithm.js"></script>
+  <script src="js4/audio.js"></script>
+  <script src="js4/pet-renderer.js"></script>
+  <script src="js4/tree-renderer.js"></script>
+  <script src="js4/storage.js"></script>
+  <script src="js4/app.js"></script>
+</body>
+</html>
